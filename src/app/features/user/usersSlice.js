@@ -1,40 +1,20 @@
 import { createSlice, createAsyncThunk} from "@reduxjs/toolkit";
-import axios from 'axios'
-//getUsersData async action
-
-
+import { getUsersData } from "./middleware";
 const initialState = {
     data:[],
     isLoading:false,
     error:""
 }
 
-export const getUsersData = createAsyncThunk("users/getUsersData", async(args, thunkAPI) => {
-    console.log(thunkAPI)
-    console.log("users response I got here")
-    try {
-      
-        // alert("starting")
-        const response = await axios.get("http://localhost:3006/users");
-        if(response){
-            // alert("success")
-            console.log("users response ",response.data)
-            return response.data
-        }
-    } catch (error) {
-        // alert("error 2")
-        console.log("Students Error ", error)
-        return error.message
-    }
-})
-
 export const usersSlice = createSlice({
     name:"users",
     initialState,
+    reducers:{},
     extraReducers:{
+        //Getting all posts start
         [getUsersData.pending]: (state,action) => {
             // state.data = action.payload
-            state.isLoading = false
+            state.isLoading = true
         },
         [getUsersData.fulfilled]: (state,action) => {
             state.data = action.payload
@@ -43,8 +23,24 @@ export const usersSlice = createSlice({
         [getUsersData.rejected]: (state,action) => {
             state.data = action.payload
             state.isLoading = false
-        }
+        },//Getting all posts ends
+       
+        //create new User starts
+        // [createNewUser.pending]: (state,action) => {
+        //     // state.data = action.payload
+        //     state.isLoading = true
+        // },
+        // [createNewUser.fulfilled]: (state,action) => {
+        //     state.data = action.payload
+        //     state.isLoading = false
+        // },
+        // [createNewUser.rejected]: (state,action) => {
+        //     state.error = action.payload
+        //     state.isLoading = false
+        // },//create a new user stops
+
     }
+
     // extraReducers: (builder) => {
     //     builder
     //     .addCase(getUsersData.pending, (state) =>{

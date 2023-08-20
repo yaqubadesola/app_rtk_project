@@ -8,13 +8,13 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 // import AddButton from "./AddButton";
-import {getUsersData} from "../usersSlice"
+import {getUsersData} from "../middleware"
 // import {getAllStudentsRec} from "../asyncActions"
 // import AddStudent from "./AddStudents";
 // import api from '../api/students';
 
 
-function UsersList() {
+export function UsersList() {
   const {data, isLoading, error} = useSelector(state => state.users)
   const dispatch = useDispatch()
 // const [isLoading, setIsLoading] = useState(false);
@@ -179,5 +179,3 @@ const options = {
     </>
   );
 }
-
-export default UsersList;
