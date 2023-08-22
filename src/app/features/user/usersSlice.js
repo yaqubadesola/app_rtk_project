@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk} from "@reduxjs/toolkit";
-import { getUsersData } from "./middleware";
+import { getUsersData, updateUser } from "./middleware";
 const initialState = {
     data:[],
     isLoading:false,
@@ -25,19 +25,19 @@ export const usersSlice = createSlice({
             state.isLoading = false
         },//Getting all posts ends
        
-        //create new User starts
-        // [createNewUser.pending]: (state,action) => {
+        //Update User starts
+        // [updateUser.pending]: (state,action) => {
         //     // state.data = action.payload
         //     state.isLoading = true
         // },
-        // [createNewUser.fulfilled]: (state,action) => {
+        // [updateUser.fulfilled]: (state,action) => {
         //     state.data = action.payload
         //     state.isLoading = false
         // },
-        // [createNewUser.rejected]: (state,action) => {
+        // [updateUser.rejected]: (state,action) => {
         //     state.error = action.payload
         //     state.isLoading = false
-        // },//create a new user stops
+        // },//Update user stops
 
     }
 

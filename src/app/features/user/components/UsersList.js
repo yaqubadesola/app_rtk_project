@@ -1,6 +1,7 @@
   
 import {useEffect, useState} from "react"
 import {useSelector, useDispatch} from "react-redux"
+import { useNavigate } from "react-router-dom";
 import MUIDataTable from "mui-datatables";
 import { CircularProgress, Alert, AlertTitle, Snackbar } from '@mui/material';
 import Stack from '@mui/material/Stack';
@@ -8,7 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 // import AddButton from "./AddButton";
-import {getUsersData} from "../middleware"
+import {getUsersData, deleteUser} from "../middleware"
 // import {getAllStudentsRec} from "../asyncActions"
 // import AddStudent from "./AddStudents";
 // import api from '../api/students';
@@ -17,6 +18,7 @@ import {getUsersData} from "../middleware"
 export function UsersList() {
   const {data, isLoading, error} = useSelector(state => state.users)
   const dispatch = useDispatch()
+  const navigation = useNavigate()
 // const [isLoading, setIsLoading] = useState(false);
 // const [data, setData] = useState([])
 // const [error, setError] = useState(null);
@@ -40,15 +42,13 @@ export function UsersList() {
 //     setShowSuccessAlert(false)
 // }
 
-// const openEditDialog = (id) => {
-//     setOpen(true);
-//     setStudId(id)
-// }
+const openEditPage = (id) => {
+  navigation(`updateuser/${id}/edit`)
+}
 
-// const deleteRec = (id) => {
-//   deleteData(id)
-// }
-
+const deleteRec = (id) => {
+ dispatch(deleteUser(id))
+}
 // const handleFailureAlertClose = () => {
 //     setShowFailureAlert(false)
 // }
@@ -135,28 +135,28 @@ const columns = [
       sort: false,
       }
     },
-    // {
-    //     name: "id",
-    //     label: "Actions",
-    //     options: {
-    //         customBodyRender: id => {          
-    //           console.log("ID id "+id)      
-    //             return (
-    //                 <Stack direction="row" spacing={1}>
-    //                     <IconButton aria-label="add" color="primary" onClick={() => openEditDialog(id)}>
-    //                         <ModeEditIcon />
-    //                     </IconButton>
-    //                     <IconButton aria-label="delete" color="error" onClick={() => deleteRec(id)}>
-    //                         <DeleteIcon/>
-    //                     </IconButton>
-    //                 </Stack>
-    //             );
+    {
+        name: "id",
+        label: "Actions",
+        options: {
+            customBodyRender: id => {          
+              console.log("ID id "+id)      
+                return (
+                    <Stack direction="row" spacing={1}>
+                        <IconButton aria-label="add" color="primary" onClick={() => openEditPage(id)}>
+                            <ModeEditIcon />
+                        </IconButton>
+                        <IconButton aria-label="delete" color="error" onClick={() => deleteRec(id)}>
+                            <DeleteIcon/>
+                        </IconButton>
+                    </Stack>
+                );
                     
-    //         }
-    //     }
+            }
+        }
 
-    // },
-];
+    }
+]
 
 const options = {
   filterType: 'checkbox',
